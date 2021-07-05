@@ -22,7 +22,7 @@ result_array = []
 outcome_array = []
 
 
-#function that imitates a coin flip (1=heads with probability .55 and 2=tails with probability .45)
+#function that imitates a coin flip (1=heads with probability .6 and 2=tails with probability .4)
 def flip():
     # np.random.seed(3621) #Reproducability
     heads_probability = .6
@@ -32,13 +32,11 @@ def flip():
     R = choices(value , prob)
     outcome = int(R[-1])
     # print(tails_probability)
-    # outcome = random.randint(1,2)
     return(outcome)
 
 
 
 def save_to_csv():
-    #Open dataframe
     #Create new row for player
     new_row = {'Trail_No': [trial_no_array[-1]],
         'Subject_ID': [player_id_array[-1]],
