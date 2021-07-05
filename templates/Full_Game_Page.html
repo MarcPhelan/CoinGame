@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Coin Toss Game: Game Page</title>
+
+    <script type="text/javascript">
+        function sideUpdate(s1,s2) {
+            if(s1 == "heads"){
+                document.getElementById('AutoSideBet').value="tails";
+                var x = document.getElementById("AutoSideBet");
+                var option = document.createElement("option");
+                option.text = "Tails";
+                x.add(option,0);
+            } else if(s1 == "tails"){
+                document.getElementById('AutoSideBet').value="heads";
+                var x = document.getElementById("AutoSideBet");
+                var option = document.createElement("option");
+                option.text = "Heads";
+                x.add(option,0);
+            }
+
+        }
+
+        function betUpdate(bet){
+
+    //    var bet = +document.getElementById(bet); // + coerces its operand into a number
+        var current_wealth = {{current_wealth_flask}};
+
+        var auto_bet = current_wealth - bet;
+
+
+        document.getElementById("AutoAmountBet").value = auto_bet;
+        }
+
+        function isNumberKey(evt){
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))
+                return false;
+            return true;
+        }
+
+    </script>
+</head>
+
+<!---
+    Here I want players to bet all of their wealth on both sides of the coin (heads or tails),
+    but I only want the player to make one choice. For example, say the person had a 'current wealth'
+    of $100.  I want them to place a bet (eg. $10 on heads) and then the other fields automatically
+    update with the other side of the bet (eg. $90 on tails)
+-->
+ <body>
+    <ul>
+        <h1>Game Statistics</h1>
+        <p> <b>Current Wealth:</b> £{{current_wealth_flask}} </p>
+        <p> <b>Current Round:</b> {{trial_flask}} </p>
+        <p> <b>Number of Heads:</b> {{heads_counter_flask}} </p>
+        <p> <b>Number of Tails:</b> {{tails_counter_flask}} </p>
+        <p class="mess" style="color: {{ color_code }}">{{message_flask}}</p>
+        <br>
+        <form action="/Full_Game_Page" , method="post">
+        <input id="amount_bet" name="amount_bet" oninput="betUpdate(this.value)" placeholder="Please enter your bet" autocomplete="off"
+        onchange="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onkeypress="return isNumberKey(event)">
+
+        <select id="side_bet" name="side_bet" onchange="sideUpdate(this.value, 'AutoSideBet')" autocomplete="off">
+            <option value="null" disabled hidden selected>Select side </option>
+            <option value="heads">Heads</option>
+            <option value="tails">Tails</option>
+        </select>
+
+        <input  id="AutoAmountBet" name="AutoAmountBet" autocomplete="off" readonly="readonly">
+        <select id="AutoSideBet" name="AutoSideBet">
+            <option value="null" disabled hidden selected>Select side </option>
+
+        </select>
+
+        <!-- <select id="AutoSideBet" name="AutoSideBet"> -->
+
+        <input type="submit" value= "Place Bet" autocomplete="off" style="display: block; margin:0 auto; background-color: rgba(0, 0, 0, 0.1);">
+
+   </form>
+    </ul>
+
+</body>
+</html>
