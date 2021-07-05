@@ -309,10 +309,6 @@ def next_full_game():
     print("outcome before " , outcome)
     result=""
 
-         #########################################################
-##### here I was very unsure what to do, --> it is based on the 'Full_Game_Page.html' input/select #####
-         #########################################################
-
     #Retrieve player input from html form
     amount_bet = request.form.get('amount_bet') #player entered amount
     amount_bet1 = request.form.get('AutoAmountBet') #automatically updated field
